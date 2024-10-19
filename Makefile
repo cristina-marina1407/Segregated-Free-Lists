@@ -1,15 +1,19 @@
-CC=gcc
-CFLAGS= -Wall -Wextra -std=c99
+CC = gcc
+CFLAGS = -Wall -Wextra --std=c99
 
-TARGETS = sfl
+TARGET = sfl
 
-build: $(TARGETS)
+SRCS = sfl.c helper.c
 
-sfl: sfl.c
-	$(CC) $(CFLAGS) sfl.c -lm -o sfl
+OBJS = $(SRCS:.c=.o)
 
-run_sfl: build
-	./$(TARGETS)
+all: $(TARGET)
+
+$(TARGET): $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) -lm -o $(TARGET)
+
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(TARGETS)
+	rm -f $(OBJS) $(TARGET)
